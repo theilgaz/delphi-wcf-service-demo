@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 249
+  ClientHeight = 348
   ClientWidth = 327
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -46,7 +46,16 @@ object Form1: TForm1
     Left = 35
     Top = 127
     Width = 257
-    Height = 89
+    Height = 161
     TabOrder = 2
+  end
+  object btnUser: TButton
+    Left = 35
+    Top = 294
+    Width = 257
+    Height = 33
+    Caption = 'Invoke User Method'
+    TabOrder = 3
+    OnClick = btnUserClick
   end
 end

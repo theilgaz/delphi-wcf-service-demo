@@ -4,10 +4,12 @@
 // WSDL     : http://localhost:62653/BasicService.svc?wsdl
 //  >Import : http://localhost:62653/BasicService.svc?wsdl>0
 //  >Import : http://localhost:62653/BasicService.svc?xsd=xsd0
+//  >Import : http://localhost:62653/BasicService.svc?xsd=xsd2
 //  >Import : http://localhost:62653/BasicService.svc?xsd=xsd1
 // Encoding : utf-8
+// Codegen  : [wfStrongClassAliases-]
 // Version  : 1.0
-// (9.04.2020 12:26:04 - - $Rev: 96726 $)
+// (9.04.2020 13:47:48 - - $Rev: 96726 $)
 // ************************************************************************ //
 
 unit BasicService;
@@ -28,11 +30,33 @@ type
   // The following types, referred to in the WSDL document are not being represented
   // in this file. They are either aliases[@] of other types represented or were referred
   // to but never[!] declared in the document. The types from the latter category
-  // typically map to predefined/known XML or Embarcadero types; however, they could also 
+  // typically map to predefined/known XML or Embarcadero types; however, they could also
   // indicate incorrect WSDL documents that failed to declare or import a schema type.
   // ************************************************************************ //
   // !:string          - "http://www.w3.org/2001/XMLSchema"[Gbl]
 
+  BasicUser            = class;                 { "http://schemas.datacontract.org/2004/07/ProjectZB.Wcf.Models"[GblCplx] }
+
+
+
+  // ************************************************************************ //
+  // XML       : BasicUser, global, <complexType>
+  // Namespace : http://schemas.datacontract.org/2004/07/ProjectZB.Wcf.Models
+  // ************************************************************************ //
+  BasicUser = class(TRemotable)
+  private
+    FPassword: string;
+    FPassword_Specified: boolean;
+    FUsername: string;
+    FUsername_Specified: boolean;
+    procedure SetPassword(Index: Integer; const Astring: string);
+    function  Password_Specified(Index: Integer): boolean;
+    procedure SetUsername(Index: Integer; const Astring: string);
+    function  Username_Specified(Index: Integer): boolean;
+  published
+    property Password: string  Index (IS_OPTN or IS_NLBL) read FPassword write SetPassword stored Password_Specified;
+    property Username: string  Index (IS_OPTN or IS_NLBL) read FUsername write SetUsername stored Username_Specified;
+  end;
 
 
   // ************************************************************************ //
@@ -50,6 +74,7 @@ type
   ['{8C27CDD4-81BC-22E7-E405-47BB50CD83A5}']
     procedure DoWork; stdcall;
     function  HelloWorld(const name_: string): string; stdcall;
+    function  GetBasicUser: BasicUser; stdcall;
   end;
 
 function GetIBasicService(UseWSDL: Boolean=System.False; Addr: string=''; HTTPRIO: THTTPRIO = nil): IBasicService;
@@ -95,6 +120,28 @@ begin
 end;
 
 
+procedure BasicUser.SetPassword(Index: Integer; const Astring: string);
+begin
+  FPassword := Astring;
+  FPassword_Specified := True;
+end;
+
+function BasicUser.Password_Specified(Index: Integer): boolean;
+begin
+  Result := FPassword_Specified;
+end;
+
+procedure BasicUser.SetUsername(Index: Integer; const Astring: string);
+begin
+  FUsername := Astring;
+  FUsername_Specified := True;
+end;
+
+function BasicUser.Username_Specified(Index: Integer): boolean;
+begin
+  Result := FUsername_Specified;
+end;
+
 initialization
   { IBasicService }
   InvRegistry.RegisterInterface(TypeInfo(IBasicService), 'http://tempuri.org/', 'utf-8');
@@ -107,5 +154,11 @@ initialization
                                 '', IS_NLBL);
   InvRegistry.RegisterParamInfo(TypeInfo(IBasicService), 'HelloWorld', 'HelloWorldResult', '',
                                 '', IS_NLBL);
+  { IBasicService.GetBasicUser }
+  InvRegistry.RegisterMethodInfo(TypeInfo(IBasicService), 'GetBasicUser', '',
+                                 '[ReturnName="GetBasicUserResult"]', IS_OPTN or IS_NLBL);
+  InvRegistry.RegisterParamInfo(TypeInfo(IBasicService), 'GetBasicUser', 'GetBasicUserResult', '',
+                                '[Namespace="http://schemas.datacontract.org/2004/07/ProjectZB.Wcf.Models"]', IS_NLBL);
+  RemClassRegistry.RegisterXSClass(BasicUser, 'http://schemas.datacontract.org/2004/07/ProjectZB.Wcf.Models', 'BasicUser');
 
 end.

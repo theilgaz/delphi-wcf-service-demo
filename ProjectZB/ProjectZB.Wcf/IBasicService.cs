@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectZB.Wcf.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -16,5 +17,8 @@ namespace ProjectZB.Wcf
 
         [OperationContract]
         string HelloWorld(string name);
+
+        [OperationContract]
+        BasicUser GetBasicUser();
     }
 }

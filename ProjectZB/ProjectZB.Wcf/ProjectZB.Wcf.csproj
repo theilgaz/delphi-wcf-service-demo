@@ -69,6 +69,7 @@
       <DependentUpon>BasicService.svc</DependentUpon>
     </Compile>
     <Compile Include="IBasicService.cs" />
+    <Compile Include="Models\BasicUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

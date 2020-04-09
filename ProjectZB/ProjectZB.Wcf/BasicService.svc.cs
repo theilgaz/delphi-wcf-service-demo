@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectZB.Wcf.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -18,6 +19,15 @@ namespace ProjectZB.Wcf
         public string HelloWorld(string name)
         {
             return "Hello " + name;
+        }
+
+        public BasicUser GetBasicUser()
+        {
+            return new BasicUser()
+            {
+                Username = "Heisenberg",
+                Password = "S4yMyN4m3"
+            };
         }
     }
 }
